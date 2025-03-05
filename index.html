@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Budget Planner - Manage Your Money Better</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f8f9fa; }
+        .calculator-box { background: white; border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        .progress-bar { transition: width 0.5s ease-in-out; }
+        .ad-unit { margin: 20px auto; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-4">Free Budget Planner</h1>
+            <p class="lead">Take control of your finances in 5 minutes</p>
+        </div>
+
+        <!-- Ad Unit -->
+        <div class="ad-unit">
+            <!-- Google AdSense Code Here -->
+        </div>
+
+        <!-- Budget Calculator -->
+        <div class="calculator-box p-4 mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Monthly Income</h3>
+                    <input type="number" id="income" class="form-control mb-3" placeholder="Enter monthly income">
+                    
+                    <h3 class="mt-4">Expenses</h3>
+                    <div class="mb-3">
+                        <input type="number" id="housing" class="form-control mb-2" placeholder="Housing">
+                        <input type="number" id="food" class="form-control mb-2" placeholder="Food">
+                        <input type="number" id="transportation" class="form-control mb-2" placeholder="Transportation">
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h3>Budget Summary</h3>
+                    <div class="progress mb-3" style="height: 30px;">
+                        <div id="budget-progress" class="progress-bar" role="progressbar"></div>
+                    </div>
+                    <p>Remaining Balance: $<span id="remaining">0</span></p>
+                    <p>Recommended Savings: $<span id="savings">0</span></p>
+                    
+                    <!-- Affiliate Products -->
+                    <div class="mt-4">
+                        <p class="text-muted">Recommended Tools:</p>
+                        <!-- Add affiliate links here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donation Section -->
+        <div class="text-center mt-4">
+            <p>Support this free tool: <button class="btn btn-outline-success">Buy me a coffee</button></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateBudget() {
+            const income = parseFloat(document.getElementById('income').value) || 0;
+            const expenses = Array.from(document.querySelectorAll('input[type="number"]:not(#income)'))
+                                .reduce((acc, input) => acc + (parseFloat(input.value) || 0), 0);
+            
+            const remaining = income - expenses;
+            const savings = income * 0.2;
+            
+            document.getElementById('remaining').textContent = remaining.toFixed(2);
+            document.getElementById('savings').textContent = savings.toFixed(2);
+            
+            const progress = (expenses/income)*100;
+            document.getElementById('budget-progress').style.width = `${progress}%`;
+        }
+
+        // Update calculations on input
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', calculateBudget);
+        });
+    </script>
+</body>
+</html>
